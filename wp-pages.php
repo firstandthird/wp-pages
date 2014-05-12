@@ -35,9 +35,9 @@ class ftPages {
 
       if(!is_array($config)) continue;
 
-      if(!array_key_exists('data', $config)) {
+      if(!array_key_exists('post_name', $config)) {
         foreach($config as $subconfig) {
-          if(!is_array($config) || !array_key_exists('data', $subconfig)) continue;
+          if(!is_array($config) || !array_key_exists('post_name', $subconfig)) continue;
 
           $this->config[] = $subconfig;
         }
@@ -50,33 +50,31 @@ class ftPages {
   function update_pages() {
     foreach($this->config as $page) {
       $existing = get_posts(array(
-        'name' => $page['data']['post_name'],
-        'post_type' => $page['data']['post_type'],
+        'name' => $page['post_name'],
+        'post_type' => $page['post_type'],
         'posts_per_page' => -1
       ));
 
       if(count($existing)) {
-        $page['data']['ID'] = $existing[0]->ID;
+        $page['ID'] = $existing[0]->ID;
       }
 
-      if(isset($page['data']['post_parent'])) {
+      if(isset($page['post_parent'])) {
         $parent = get_posts(array(
-          'name' => $page['data']['post_parent'],
-          'post_type' => $page['data']['post_type'],
+          'name' => $page['post_parent'],
+          'post_type' => $page['post_type'],
           'posts_per_page' => -1
         ));
 
         if(count($parent)) {
-          $page['data']['post_parent'] = $parent[0]->ID;
+          $page['post_parent'] = $parent[0]->ID;
         }
       }
 
-      $inserted = wp_insert_post($page['data']);
+      $inserted = wp_insert_post($page);
 
-      if(isset($page['meta'])) {
-        foreach($page['meta'] as $meta_key => $meta_value) {
-          $update = update_post_meta($inserted, $meta_key, $meta_value, true);
-        }
+      if(isset($page['template'])) {
+        $update = update_post_meta($inserted, '_wp_page_template', $page['template'], true);
       }
     }
   }

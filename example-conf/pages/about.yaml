@@ -1,11 +1,8 @@
 # Use: http://codex.wordpress.org/Function_Reference/wp_insert_post
 
-data:
-  post_title: About
-  post_name: about #slug
-  post_status: publish
-  post_type: page
-  post_content: 'Welcome to my blog. Please leave a comment!'
-
-meta:
-    _wp_page_template: page-templates/about.php
+post_title: About
+post_name: about #slug
+post_status: publish
+post_type: page
+post_content: 'Welcome to my blog. Please leave a comment!'
+template: page-templates/about.php
