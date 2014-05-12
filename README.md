@@ -20,7 +20,7 @@ After you make changes go to the wordpress admin and use the settings->Update Pa
 In your plugin or functions.php
 
 ```php
-add_action('init', 'test_posttypes');
+add_action('init', 'test_pages');
 function test_pages() {
   do_action('ft_pages_path', '/your/path/here/');
 }
