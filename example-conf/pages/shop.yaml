@@ -1,0 +1,36 @@
+# Use: http://codex.wordpress.org/Function_Reference/wp_insert_post
+
+-
+  data:
+    post_title: Shop
+    post_name: shop #slug
+    post_status: publish
+    post_type: page
+
+  meta:
+    _wp_page_template: page-templates/shop.php
+
+-
+  data:
+    post_title: Cart
+    post_name: cart #slug
+    post_status: publish
+    post_type: page
+    post_content: 'Your cart contains [some_items]'
+    post_parent: shop #parent slug
+
+  meta:
+    _wp_page_template: page-templates/shop.php
+
+-
+  data:
+    post_title: Shop Admin
+    post_name: admin #slug
+    post_status: publish
+    post_type: page
+    post_content: 'You found the secret page!'
+    post_parent: shop #parent slug
+    post_password: super_secret_password
+
+  meta:
+    _wp_page_template: page-templates/shop.php
