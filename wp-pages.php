@@ -11,6 +11,7 @@ if(!class_exists('Spyc')) {
 class ftPages {
 
   private $config = array();
+  private $page_ids = array();
 
   function __construct() {
     $this->config_path =   WP_CONTENT_DIR . '/pages';
@@ -21,6 +22,10 @@ class ftPages {
     add_action('ft_pages_path', array($this, 'set_path'));
 
     $this->parse();
+    $this->get_page_ids();
+
+    // Remove pages from admin
+    add_filter('parse_query', array($this, 'remove_from_admin'));
   }
 
   private function parse() {
@@ -44,6 +49,34 @@ class ftPages {
       } else { 
         $this->config[] = $config;
       }
+    }
+  }
+
+  private function get_page_ids() {
+    $pages = array();
+
+    foreach($this->config as $page) {
+      $existing = get_posts(array(
+        'name' => $page['post_name'],
+        'post_type' => $page['post_type'],
+        'posts_per_page' => -1
+      ));
+
+      if(count($existing)) {
+        $pages[] = $existing[0]->ID;
+      }
+    }
+
+    $this->page_ids = $pages;
+  }
+
+  function remove_from_admin($query) {
+    global $pagenow, $post_type;
+
+    if(!is_admin()) return $query;
+
+    if($pagenow === 'edit.php' && $post_type === 'page') {
+      $query->query_vars['post__not_in'] = $this->page_ids;
     }
   }
 
