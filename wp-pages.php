@@ -33,7 +33,7 @@ class ftPages {
       return false;
     }
 
-    foreach (glob($this->config_path . "/**/*.yaml") as $filename) {
+    foreach (glob($this->config_path . "/*.yaml") as $filename) {
       $config = array();
 
       $config = spyc_load_file($filename);
