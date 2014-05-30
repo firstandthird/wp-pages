@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: wp-pages
+ * Plugin Name: First+Third Pages
  * Description: Wordpress Custom Pages
  */
 
