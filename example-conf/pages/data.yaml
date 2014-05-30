@@ -1,0 +1,6 @@
+post_title: Data
+post_name: data-example #slug
+post_status: publish
+post_type: page
+template: page-templates/data-example.php
+data: example-data.yaml
