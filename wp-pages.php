@@ -26,6 +26,9 @@ class ftPages {
 
     // Remove pages from admin
     add_filter('parse_query', array($this, 'remove_from_admin'));
+
+    // Add data to templates
+    add_action('template_redirect', array($this, 'add_data'));
   }
 
   private function parse() {
@@ -78,6 +81,23 @@ class ftPages {
     if($pagenow === 'edit.php' && $post_type === 'page') {
       $query->query_vars['post__not_in'] = $this->page_ids;
     }
+  }
+
+  function add_data() {
+    global $pagename;
+    
+    if(isset($pagename)) {
+      foreach($this->config as $page) {
+        if($page['post_name'] === $pagename && isset($page['data'])) {
+          $this->load_data($page);
+          break;
+        }
+      }
+    }
+  }
+
+  function load_data($page) {
+    $GLOBALS[$page['post_name']] = spyc_load_file($this->config_path . '/data/' . $page['data']);
   }
 
   function update_pages() {
