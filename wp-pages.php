@@ -150,4 +150,4 @@ class ftPages {
   }
 }
 
-$ftPages = new ftPages;
+$GLOBALS['ftPages'] = new ftPages;
