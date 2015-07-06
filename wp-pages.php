@@ -49,7 +49,7 @@ class ftPages {
 
           $this->config[] = $subconfig;
         }
-      } else { 
+      } else {
         $this->config[] = $config;
       }
     }
@@ -85,7 +85,7 @@ class ftPages {
 
   function add_data() {
     global $pagename;
-    
+
     if(isset($pagename)) {
       foreach($this->config as $page) {
         if($page['post_name'] === $pagename && isset($page['data'])) {
@@ -128,6 +128,12 @@ class ftPages {
 
       if(isset($page['template'])) {
         $update = update_post_meta($inserted, '_wp_page_template', $page['template'], true);
+      }
+
+      if(isset($page['post_meta'])) {
+        foreach($page['post_meta'] as $var => $val) {
+          $update = update_post_meta($inserted, $var, $val);
+        }
       }
     }
   }
