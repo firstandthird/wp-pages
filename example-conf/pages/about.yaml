@@ -6,3 +6,5 @@ post_status: publish
 post_type: page
 post_content: 'Welcome to my blog. Please leave a comment!'
 template: page-templates/about.php
+post_meta:
+  some_post_meta_var: 'some_post_meta_value'
